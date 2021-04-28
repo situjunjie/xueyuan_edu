@@ -20,6 +20,7 @@ import java.util.List;
  * @author situjunjie
  * @since 2021-04-24
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/eduservice/edu-teacher")
 public class EduTeacherController {
@@ -29,6 +30,7 @@ public class EduTeacherController {
 
     @GetMapping
     public R getAllTeacherList(){
+        int i =1/0;
         List<EduTeacher> list = eduTeacherService.list(null);
         return  R.ok().data("items",list);
     }

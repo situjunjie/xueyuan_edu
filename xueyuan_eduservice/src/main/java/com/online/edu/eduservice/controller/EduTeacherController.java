@@ -30,15 +30,16 @@ public class EduTeacherController {
 
     @GetMapping
     public R getAllTeacherList(){
-        int i =1/0;
+        //int i =1/0;
         List<EduTeacher> list = eduTeacherService.list(null);
         return  R.ok().data("items",list);
     }
 
+    @CrossOrigin
     @DeleteMapping("{id}")
-    public boolean deleteTeacherById(@PathVariable String id){
-        boolean b = eduTeacherService.removeById(id);
-        return b;
+    public R deleteTeacherById(@PathVariable String id){
+         eduTeacherService.removeById(id);
+         return R.ok();
     }
 
     //分页查询

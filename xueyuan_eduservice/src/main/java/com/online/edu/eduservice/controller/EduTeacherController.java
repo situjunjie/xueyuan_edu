@@ -37,7 +37,7 @@ public class EduTeacherController {
 
     @CrossOrigin
     @DeleteMapping("{id}")
-    public R deleteTeacherById(@PathVariable String id){
+    public R  deleteTeacherById(@PathVariable String id){
          eduTeacherService.removeById(id);
          return R.ok();
     }

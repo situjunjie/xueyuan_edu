@@ -37,7 +37,7 @@ public class EduTeacherController {
 
     @CrossOrigin
     @DeleteMapping("{id}")
-    public R  deleteTeacherById(@PathVariable String id){
+    public R deleteTeacherById(@PathVariable String id){
          eduTeacherService.removeById(id);
          return R.ok();
     }
@@ -56,7 +56,7 @@ public class EduTeacherController {
     @PostMapping("/getMoreConditionPageList/{page}/{limit}")
     public R getMoreConditionPageList(@PathVariable Long page, @PathVariable Long limit,@RequestBody(required = false) QueryTeacher queryTeacher){
 
-        Page<EduTeacher> pageinfo = new Page<EduTeacher>(page,limit);
+        Page<EduTeacher> pageinfo = new Page<>(page,limit);
         eduTeacherService.queryConditionPageList(pageinfo,queryTeacher);
         return R.ok().data("total",pageinfo.getTotal()).data("items",pageinfo.getRecords());
     }

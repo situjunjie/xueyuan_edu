@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * <p>
  * 课程 服务实现类
@@ -76,5 +78,15 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         EduCourseDescription description = eduCourseDescriptionService.getById(id);
         BeanUtils.copyProperties(description,form);
         return form;
+    }
+
+
+    /**
+     * 获取所有课程
+     * @return
+     */
+    @Override
+    public List<EduCourse> getAllCourse() {
+        return baseMapper.selectList(null);
     }
 }

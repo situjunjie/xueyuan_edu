@@ -6,9 +6,13 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.online.edu.common.R;
 import com.online.edu.eduservice.entity.EduCourse;
+import com.online.edu.eduservice.entity.EduVideo;
 import com.online.edu.eduservice.entity.req.CourseQuery;
 import com.online.edu.eduservice.entity.req.form.CourseInfoForm;
+import com.online.edu.eduservice.service.EduChapterService;
+import com.online.edu.eduservice.service.EduCourseDescriptionService;
 import com.online.edu.eduservice.service.EduCourseService;
+import com.online.edu.eduservice.service.EduVideoService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -32,6 +36,15 @@ public class EduCourseController {
 
     @Autowired
     EduCourseService eduCourseService;
+
+    @Autowired
+    EduCourseDescriptionService eduCourseDescriptionService;
+
+    @Autowired
+    EduChapterService eduChapterService;
+
+    @Autowired
+    EduVideoService eduVideoService;
 
     @PostMapping("/addCourseInfo")
     public R addCourseInfo(@RequestBody CourseInfoForm form){
@@ -75,9 +88,7 @@ public class EduCourseController {
      */
     @PostMapping("/course-list/{page}/{limit}")
     public R getCoursePage(@PathVariable("page") long page, @PathVariable("limit") long limit, @RequestBody(required = false) CourseQuery query){
-        Page<EduCourse> pageInfo = new Page<>();
-        pageInfo.setPages(page);
-        pageInfo.setSize(limit);
+        Page<EduCourse> pageInfo = new Page<>(page,limit);
         if(query==null){
             IPage<EduCourse> list = eduCourseService.page(pageInfo, null);
             return R.ok().data("items",list);
@@ -90,10 +101,23 @@ public class EduCourseController {
         if(!StringUtils.isEmpty(query.getTeacherId()))
             wrapper.eq("teacher_id",query.getTeacherId());
         if(!StringUtils.isEmpty(query.getTitle()))
-            wrapper.eq("title",query.getTitle());
+            wrapper.like("title",query.getTitle());
         IPage<EduCourse> list = eduCourseService.page(pageInfo, wrapper);
         return R.ok().data("items",list);
     }
 
+    @DeleteMapping("/delete-course/{id}")
+    public R removeCourseById(@PathVariable("id") String id){
+
+        eduVideoService.deleteCourseById(id);
+
+        eduChapterService.deleteCourseById(id);
+
+        eduCourseDescriptionService.deleteCourseById(id);
+
+        eduCourseService.removeById(id);
+
+        return R.ok();
+    }
 }
 

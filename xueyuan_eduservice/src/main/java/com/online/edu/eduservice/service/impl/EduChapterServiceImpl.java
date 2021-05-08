@@ -72,4 +72,15 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
 
 
     }
+
+    @Override
+    public boolean removeChapterById(String id) {
+        QueryWrapper<EduVideo> wrapper = new QueryWrapper<>();
+        wrapper.eq("chapter_id",id);
+        int count = eduVideoService.count(wrapper);
+        if(count>0)
+            return false;
+        baseMapper.deleteById(id);
+        return true;
+    }
 }

@@ -9,6 +9,7 @@ import com.online.edu.eduservice.entity.EduCourse;
 import com.online.edu.eduservice.entity.EduVideo;
 import com.online.edu.eduservice.entity.req.CourseQuery;
 import com.online.edu.eduservice.entity.req.form.CourseInfoForm;
+import com.online.edu.eduservice.entity.resp.CourseDetailVo;
 import com.online.edu.eduservice.service.EduChapterService;
 import com.online.edu.eduservice.service.EduCourseDescriptionService;
 import com.online.edu.eduservice.service.EduCourseService;
@@ -118,6 +119,12 @@ public class EduCourseController {
         eduCourseService.removeById(id);
 
         return R.ok();
+    }
+
+    @GetMapping("/getCourseDetail/{courseId}")
+    public R getCourseDetailById(@PathVariable String courseId){
+        CourseDetailVo vo = eduCourseService.getCourseDetailById(courseId);
+        return R.ok().data("courseDetail",vo);
     }
 }
 

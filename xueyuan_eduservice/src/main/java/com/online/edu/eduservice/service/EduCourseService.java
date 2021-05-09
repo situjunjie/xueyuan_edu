@@ -3,6 +3,7 @@ package com.online.edu.eduservice.service;
 import com.online.edu.eduservice.entity.EduCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.online.edu.eduservice.entity.req.form.CourseInfoForm;
+import com.online.edu.eduservice.entity.resp.CourseDetailVo;
 
 import java.util.List;
 
@@ -25,4 +26,5 @@ public interface EduCourseService extends IService<EduCourse> {
     List<EduCourse> getAllCourse();
 
 
+    CourseDetailVo getCourseDetailById(String courseId);
 }

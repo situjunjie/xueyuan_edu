@@ -3,6 +3,7 @@ package com.online.edu.eduservice.service.impl;
 import com.online.edu.eduservice.entity.EduCourse;
 import com.online.edu.eduservice.entity.EduCourseDescription;
 import com.online.edu.eduservice.entity.req.form.CourseInfoForm;
+import com.online.edu.eduservice.entity.resp.CourseDetailVo;
 import com.online.edu.eduservice.mapper.EduCourseMapper;
 import com.online.edu.eduservice.service.EduCourseDescriptionService;
 import com.online.edu.eduservice.service.EduCourseService;
@@ -88,5 +89,10 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     @Override
     public List<EduCourse> getAllCourse() {
         return baseMapper.selectList(null);
+    }
+
+    @Override
+    public CourseDetailVo getCourseDetailById(String courseId) {
+        return baseMapper.getCourseDetailById(courseId);
     }
 }

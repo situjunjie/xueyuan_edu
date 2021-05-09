@@ -2,4 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.online.edu.eduservice.mapper.EduCourseMapper">
 
+    <select id="getCourseDetailById" resultType="com.online.edu.eduservice.entity.resp.CourseDetailVo">
+        select a.id as id,a.title,a.price,b.description,c.name as teacher_name,d.title as first_subject ,e.title as second_subject
+        from xueyuan_edu.edu_course a
+                 left join xueyuan_edu.edu_course_description b on a.id=b.id
+                 left join xueyuan_edu.edu_teacher c on a.teacher_id =c.id
+                 left join xueyuan_edu.edu_subject d on a.first_subject_id =d.id
+                 left join xueyuan_edu.edu_subject e on e.id=a.subject_id
+        where a.id = #{courseId}
+    </select>
 </mapper>

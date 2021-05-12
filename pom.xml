@@ -5,6 +5,7 @@
     <modules>
         <module>xueyuan_eduservice</module>
         <module>xueyuan_common</module>
+        <module>xueyuan-eduvideo</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

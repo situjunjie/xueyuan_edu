@@ -66,6 +66,9 @@ public class EduVideo implements Serializable {
     @ApiModelProperty(value = "乐观锁")
     private Long version;
 
+    @ApiModelProperty(value = "上传的视频名称")
+    private String videoOriginalName;
+
     @TableField(fill = FieldFill.INSERT)
     @ApiModelProperty(value = "创建时间")
     private Date gmtCreate;

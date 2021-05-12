@@ -14,4 +14,5 @@ public class CourseDetailVo {
     private String teacherName;
     private String firstSubject;
     private String secondSubject;
+    private String cover;
 }

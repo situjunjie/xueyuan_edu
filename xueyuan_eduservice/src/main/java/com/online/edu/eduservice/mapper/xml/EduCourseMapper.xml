@@ -3,7 +3,7 @@
 <mapper namespace="com.online.edu.eduservice.mapper.EduCourseMapper">
 
     <select id="getCourseDetailById" resultType="com.online.edu.eduservice.entity.resp.CourseDetailVo">
-        select a.id as id,a.title,a.price,b.description,c.name as teacher_name,d.title as first_subject ,e.title as second_subject
+        select a.id as id,a.title,a.price,b.description,c.name as teacher_name,d.title as first_subject ,e.title as second_subject,a.cover as cover
         from xueyuan_edu.edu_course a
                  left join xueyuan_edu.edu_course_description b on a.id=b.id
                  left join xueyuan_edu.edu_teacher c on a.teacher_id =c.id

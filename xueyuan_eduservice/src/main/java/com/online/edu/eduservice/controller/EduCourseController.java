@@ -126,5 +126,14 @@ public class EduCourseController {
         CourseDetailVo vo = eduCourseService.getCourseDetailById(courseId);
         return R.ok().data("courseDetail",vo);
     }
+
+    @GetMapping("/updateCoursePublish/{courseId}")
+    public R updateCoursePublish(@PathVariable String courseId){
+        EduCourse eduCourse = new EduCourse();
+        eduCourse.setId(courseId);
+        eduCourse.setStatus("Normal");
+        eduCourseService.updateById(eduCourse);
+        return R.ok();
+    }
 }
 

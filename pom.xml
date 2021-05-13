@@ -6,6 +6,7 @@
         <module>xueyuan_eduservice</module>
         <module>xueyuan_common</module>
         <module>xueyuan-eduvideo</module>
+        <module>xueyuan_ekservice</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -88,6 +89,14 @@
                 <groupId>commons-fileupload</groupId>
                 <artifactId>commons-fileupload</artifactId>
                 <version>${commons-fileupload.version}</version>
+            </dependency>
+            <!--Spring Cloud-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Finchley.SR2</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

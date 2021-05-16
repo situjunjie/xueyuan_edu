@@ -1,10 +1,13 @@
 package com.online.edu.eduservice.controller;
 
 
+import com.netflix.discovery.converters.Auto;
 import com.online.edu.common.R;
+import com.online.edu.eduservice.client.VidServiceClient;
 import com.online.edu.eduservice.entity.EduVideo;
 import com.online.edu.eduservice.service.EduVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -22,6 +25,9 @@ public class EduVideoController {
 
     @Autowired
     EduVideoService eduVideoService;
+
+    @Autowired
+    VidServiceClient vidServiceClient;
 
     @GetMapping("/getVideo/{id}")
     public R getVideoById(@PathVariable String id){
@@ -47,7 +53,11 @@ public class EduVideoController {
     
     @DeleteMapping("/deleteVideo/{id}")
     public R deleteVideo(@PathVariable String id){
-        //TODO 后续需要删除阿里云后台视频
+
+        EduVideo eduVideo = eduVideoService.getById(id);
+        String videoSourceId = eduVideo.getVideoSourceId();
+        if(!StringUtils.isEmpty(videoSourceId))
+            vidServiceClient.delteAliyunVideoById(videoSourceId);
         boolean b = eduVideoService.removeById(id);
         if(b)
             return R.ok().message("删除小节成功");

@@ -9,12 +9,14 @@ import com.aliyuncs.vod.model.v20170321.DeleteVideoRequest;
 import com.aliyuncs.vod.model.v20170321.DeleteVideoResponse;
 import com.online.edu.xueyuaneduvideo.service.VidService;
 import com.online.edu.xueyuaneduvideo.util.ConstantPropertiesUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 @Service
 public class VidServiceImpl implements VidService {
@@ -43,6 +45,25 @@ public class VidServiceImpl implements VidService {
             System.out.print("ErrorMessage = " + e.getLocalizedMessage());
             return  false;
         }
+        System.out.print("RequestId = " + response.getRequestId() + "\n");
+        return true;
+    }
+
+    @Override
+    public boolean delteAliyunVideoByIds(List ids) {
+        Object[] idArr =  ids.toArray();
+        String str = StringUtils.join(idArr, ',');
+        DeleteVideoResponse response = new DeleteVideoResponse();
+        try {
+            DeleteVideoRequest request = new DeleteVideoRequest();
+            //支持传入多个视频ID，多个用逗号分隔
+            request.setVideoIds(str);
+            response = acsClient.getAcsResponse(request);
+        } catch (Exception e) {
+            System.out.print("ErrorMessage = " + e.getLocalizedMessage());
+            return  false;
+        }
+        System.out.println("批量删除成功");
         System.out.print("RequestId = " + response.getRequestId() + "\n");
         return true;
     }

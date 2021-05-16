@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/vidservice/vod")
@@ -25,6 +26,12 @@ public class VidController {
     @DeleteMapping("/{videoId}")
     public R delteAliyunVideoById(@PathVariable String videoId){
         boolean flag = vidService.delteAliyunVideoById(videoId);
+        return R.ok().message("删除视频成功");
+    }
+
+    @DeleteMapping()
+    public R delteAliyunVideoByIdList(@RequestParam("ids") List<String> ids){
+        boolean flag = vidService.delteAliyunVideoByIds(ids);
         return R.ok().message("删除视频成功");
     }
 }

@@ -7,6 +7,9 @@
         <module>xueyuan_common</module>
         <module>xueyuan-eduvideo</module>
         <module>xueyuan_ekservice</module>
+        <module>xueyuan_usercenter</module>
+        <module>statservice</module>
+        <module>xueyuan_edustatservice</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

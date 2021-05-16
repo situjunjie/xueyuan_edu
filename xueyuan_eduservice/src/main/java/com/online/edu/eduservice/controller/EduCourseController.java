@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.online.edu.common.R;
+import com.online.edu.eduservice.client.VidServiceClient;
+import com.online.edu.eduservice.entity.EduChapter;
 import com.online.edu.eduservice.entity.EduCourse;
 import com.online.edu.eduservice.entity.EduVideo;
 import com.online.edu.eduservice.entity.req.CourseQuery;
@@ -19,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,6 +49,9 @@ public class EduCourseController {
 
     @Autowired
     EduVideoService eduVideoService;
+
+    @Autowired
+    VidServiceClient vidServiceClient;
 
     @PostMapping("/addCourseInfo")
     public R addCourseInfo(@RequestBody CourseInfoForm form){
@@ -78,6 +84,32 @@ public class EduCourseController {
     public R getAllCourse(){
         List<EduCourse> list = eduCourseService.getAllCourse();
         return R.ok().data("items",list);
+    }
+
+    @DeleteMapping("/deleteCourse/{courseId}")
+    public R deleteCourseByCourseId(@PathVariable String courseId){
+
+        //1.删除所有小节
+        QueryWrapper<EduVideo> wrapper = new QueryWrapper<>();
+        wrapper.eq("course_id",courseId);
+        List<EduVideo> eduVideoList = eduVideoService.list(wrapper);
+        List<String> videoSourceIds = new ArrayList<>();
+        for (EduVideo video:eduVideoList
+             ) {
+            videoSourceIds.add(video.getVideoSourceId());
+        }
+        vidServiceClient.delteAliyunVideoByIdList(videoSourceIds);
+        eduVideoService.remove(wrapper);
+        //2.删除所有章节
+        QueryWrapper<EduChapter> wrapper1 = new QueryWrapper<>();
+        wrapper1.eq("course_id",courseId);
+        eduChapterService.remove(wrapper1);
+        //3.删除课程
+        eduCourseService.removeById(courseId);
+
+        //4.删除课程描述
+        eduCourseDescriptionService.removeById(courseId);
+        return R.ok();
     }
 
     /**
